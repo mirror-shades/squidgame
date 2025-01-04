@@ -1,9 +1,14 @@
 extends CharacterBody3D
 
-
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
+func checkDeath():
+	var is_moving = velocity.x != 0 or velocity.y != 0 or velocity.z != 0
+	var in_danger_condition = Globals.isDanger() and !Globals.isRotating() and (is_moving or not is_on_floor())
+	
+	if in_danger_condition:
+		print("dead")
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -26,3 +31,6 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+func _process(delta: float) -> void:
+	checkDeath()
