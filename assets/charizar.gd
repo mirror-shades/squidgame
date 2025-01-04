@@ -1,7 +1,7 @@
 extends Node3D
 
 # Reference to the Timer node
-@onready var random_timer = $Timer
+var random_timer
 
 # Rotation amount in degrees to apply at each timeout
 @export var rotation_amount: float = 180.0
@@ -9,18 +9,23 @@ extends Node3D
 var rng = RandomNumberGenerator.new()
 
 # Add these new variables at the top with the other properties
-@export var rotation_duration: float = 1.0  # Duration of rotation in seconds
+var rotation_duration: float # Duration of rotation in seconds
 var is_rotating: bool = false
 
+func set_rotation_duration():
+	rotation_duration = rng.randf_range(0.3, 0.8)
+
 func _ready():
+	random_timer = $Timer
 	# Connect the timeout signal of the timer to a function
 	random_timer.timeout.connect(_on_RandomTimer_timeout)
 	# Start the process by setting the first random timeout
 	set_random_timeout()
+	set_rotation_duration()
 
 func set_random_timeout():
-	# Get a random float between 5 and 10
-	var random_time = rng.randf_range(5.0, 10.0)
+	# Get a random float between 2 and 4
+	var random_time = rng.randf_range(2, 4)
 	random_timer.wait_time = random_time
 	random_timer.start()
 
