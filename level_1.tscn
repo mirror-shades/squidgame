@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://pg3ejb132qhd"]
+
+[ext_resource type="Script" path="res://character_body_3d.gd" id="1_8glgt"]
+[ext_resource type="Script" path="res://squid.gd" id="3_44bnk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_okywu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jb7k5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfp61"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8m0xu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ulfta"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_bd5uc"]
+
+[node name="Level1" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19209e-07, -0.498807, 0.21337)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(50, 0, 0, 0, 0.1, 0, 0, 0, 50, 0, 0, 0)
+shape = SubResource("BoxShape3D_okywu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(50, 0, 0, 0, 0.1, 0, 0, 0, 50, 0, 0, 0)
+mesh = SubResource("BoxMesh_jb7k5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.742572, 0.669766, 0, -0.669766, 0.742572, -2.10052, 60.7009, 69.3412)
+
+[node name="Pillboy" type="CharacterBody3D" parent="."]
+script = ExtResource("1_8glgt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillboy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+shape = SubResource("CapsuleShape3D_sfp61")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillboy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+mesh = SubResource("CapsuleMesh_8m0xu")
+skeleton = NodePath("")
+
+[node name="Camera3D" type="Camera3D" parent="Pillboy"]
+transform = Transform3D(0.999793, -0.00683895, 0.0191787, 0.00156616, 0.964945, 0.262446, -0.0203013, -0.262362, 0.964756, -0.49131, 12.6617, 12.1793)
+fov = 71.576
+
+[node name="Squid" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -21.0323)
+script = ExtResource("3_44bnk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Squid"]
+transform = Transform3D(2, 0, 0, 0, 5, 0, 0, 0, 2, 0, 2.04964, 0)
+shape = SubResource("BoxShape3D_ulfta")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Squid"]
+transform = Transform3D(2, 0, 0, 0, 5, 0, 0, 0, 2, 0, 2.0778, 0)
+mesh = SubResource("BoxMesh_bd5uc")
+
+[node name="Timer" type="Timer" parent="Squid"]
