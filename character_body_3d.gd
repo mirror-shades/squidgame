@@ -9,6 +9,7 @@ func _ready():
 	# Get the reference to the fire child node
 	fire_effect = $Fire
 	fire_effect.hide()  # Make sure it's hidden initially
+	$Camera3D/RichTextLabel.text = ""  # Initialize empty
 
 func checkDeath():
 	var is_moving = velocity.x != 0 or velocity.y != 0 or velocity.z != 0
@@ -43,5 +44,10 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+func checkWinner():
+	if(Globals.getPlayers().size() == 1):
+		$Text.text = "hello world"
+
 func _process(delta: float) -> void:
 	checkDeath()
+	checkWinner()
