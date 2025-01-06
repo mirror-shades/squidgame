@@ -13,7 +13,7 @@ var rotation_duration: float # Duration of rotation in seconds
 var is_rotating: bool = false
 
 func set_rotation_duration():
-	rotation_duration = rng.randf_range(0.3, 0.8)
+	rotation_duration = rng.randf_range(0.5, 1)
 
 func _ready():
 	random_timer = $Timer

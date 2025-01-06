@@ -1,10 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://pg3ejb132qhd"]
+[gd_scene load_steps=19 format=3 uid="uid://pg3ejb132qhd"]
 
-[ext_resource type="Script" path="res://character_body_3d.gd" id="1_8glgt"]
+[ext_resource type="Script" path="res://referee.gd" id="1_8glgt"]
 [ext_resource type="PackedScene" uid="uid://b2jwchwyguydf" path="res://assets/charizar.blend" id="1_b6st0"]
 [ext_resource type="Script" path="res://assets/charizar.gd" id="2_c7bo2"]
 [ext_resource type="PackedScene" uid="uid://cee2q1y4r5q0m" path="res://fire.tscn" id="4_ijrqj"]
-[ext_resource type="Script" path="res://ai.gd" id="5_4lr5b"]
+[ext_resource type="Script" path="res://reset.gd" id="4_y2peo"]
+[ext_resource type="Script" path="res://eirik.gd" id="5_4lr5b"]
+[ext_resource type="Script" path="res://coop.gd" id="6_00j6b"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_jb7k5"]
 
@@ -31,6 +33,8 @@ albedo_color = Color(0.599793, 0.653445, 0.17794, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_w0n3m"]
 material = SubResource("StandardMaterial3D_6qr2m")
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_36ypx"]
+
 [node name="Level1" type="Node3D"]
 
 [node name="charizar" parent="." instance=ExtResource("1_b6st0")]
@@ -51,30 +55,40 @@ shape = SubResource("BoxShape3D_ko1yk")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.742572, 0.669766, 0, -0.669766, 0.742572, -2.10052, 60.7009, 69.3412)
 
-[node name="Pillboy" type="CharacterBody3D" parent="."]
+[node name="Referee" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.1527)
 script = ExtResource("1_8glgt")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillboy"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Referee"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
 shape = SubResource("CapsuleShape3D_sfp61")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillboy"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Referee"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
 mesh = SubResource("CapsuleMesh_8m0xu")
 skin = SubResource("Skin_v3un2")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_a2aeu")
 
-[node name="Camera3D" type="Camera3D" parent="Pillboy"]
+[node name="Camera3D" type="Camera3D" parent="Referee"]
 transform = Transform3D(0.999793, -0.00683895, 0.0191787, 0.00156616, 0.964945, 0.262446, -0.0203013, -0.262362, 0.964756, -0.49131, 12.6617, 12.1793)
 fov = 71.576
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Pillboy/Camera3D"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="RichTextLabel" type="RichTextLabel" parent="Referee/Camera3D"]
+top_level = true
+z_index = 1
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 1157.0
+offset_bottom = 650.0
+theme_override_font_sizes/bold_italics_font_size = 100
+theme_override_font_sizes/italics_font_size = 100
+theme_override_font_sizes/mono_font_size = 100
+theme_override_font_sizes/normal_font_size = 100
+theme_override_font_sizes/bold_font_size = 100
+tab_size = 0
 
-[node name="Fire" parent="Pillboy" instance=ExtResource("4_ijrqj")]
+[node name="Fire" parent="Referee" instance=ExtResource("4_ijrqj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
 visible = false
 
@@ -96,3 +110,31 @@ mesh = SubResource("CapsuleMesh_w0n3m")
 [node name="Fire" parent="Eirik" instance=ExtResource("4_ijrqj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.969919, 0)
 visible = false
+
+[node name="Coop" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.931, 1, -16.767)
+script = ExtResource("6_00j6b")
+
+[node name="Timer" type="Timer" parent="Coop"]
+wait_time = 0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Coop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_kayqs")
+
+[node name="Fire" parent="Coop" instance=ExtResource("4_ijrqj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.969919, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Coop"]
+mesh = SubResource("CapsuleMesh_36ypx")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+z_index = 1
+offset_left = 1101.0
+offset_right = 1152.0
+offset_bottom = 31.0
+text = "Reset"
+script = ExtResource("4_y2peo")

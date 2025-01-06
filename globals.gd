@@ -14,11 +14,8 @@ func getPlayers():
 func removePlayer(player):
 	players.erase(player)
 
-func setWinner(newWinner):
-	winner = newWinner
-
 func getWinner():
-	return winner
+	return players[0]
 
 func setDanger(newDanger):
 	danger = newDanger
@@ -31,3 +28,9 @@ func setRotating(newRotating):
 
 func isRotating():
 	return rotating
+
+func newGame():
+	danger = false
+	rotating = false
+	winner = ""
+	players = []

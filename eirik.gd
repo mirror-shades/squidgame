@@ -13,8 +13,8 @@ var locked = false
 var can_move = true
 
 func getLittleRand():
-	const MIN = 0.05 
-	const MAX = 0.1 
+	const MIN = 0.01 
+	const MAX = 0.1
 	var littleRand = rng.randf_range(MIN, MAX) 
 	return littleRand
 
@@ -23,7 +23,7 @@ func _ready() -> void:
 	rng.randomize()
 	
 	speed = BASE_SPEED + getLittleRand()
-	Globals.setPlayer(self)
+	Globals.setPlayer("Eirik")
 	timer = $Timer
 	fire_effect = $Fire
 	fire_effect.hide()
@@ -35,7 +35,7 @@ func checkDeath():
 	var in_danger_condition = Globals.isDanger() and !Globals.isRotating() and (is_moving)
 	
 	if in_danger_condition:
-		Globals.removePlayer(self)
+		Globals.removePlayer("Eirik")
 		is_on_fire = true
 		fire_effect.show()
 
@@ -81,7 +81,7 @@ func run_down():
 func _process(delta: float) -> void:
 	if (Globals.isDanger() or Globals.isRotating()) and not locked:
 		stop()
-	elif not Globals.isDanger() and not is_on_fire:
+	elif not Globals.isDanger() and not is_on_fire and Globals.getPlayers().size() > 1:
 		locked = false
 		go()
 	
